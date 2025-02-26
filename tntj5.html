@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>தமிழ்நாடு தவ்ஹீத் ஜமாஅத் - நெய்வேலி கிளை</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f8f9fa; }
+        .header { background: #007bff; color: white; padding: 20px; font-size: 24px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
+        .activity { margin: 20px 0; padding: 15px; background: #eef; border-radius: 10px; text-align: left; }
+        h2 { color: #007bff; }
+        .btn { padding: 10px 15px; margin: 5px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .btn:hover { background: #218838; }
+        .donate-section { background: #fff3cd; padding: 20px; border-radius: 10px; }
+        .total { font-size: 20px; font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">தமிழ்நாடு தவ்ஹீத் ஜமாஅத் - நெய்வேலி கிளை</div>
+
+    <div class="container">
+        <h2>📢 சமூக மற்றும் மார்க்க பணிகள்</h2>
+
+        <div class="activity">
+            <h3>📖 திருக்குர்ஆன் இலவச விநியோகம்</h3>
+            <button class="btn" onclick="addDonation('திருக்குர்ஆன்', 250)">Donate Rs. 250 per Quran</button>
+            <button class="btn" onclick="addDonation('திருக்குர்ஆன் ஆண்டு', 25000)">Sponsor Yearly (Rs. 25,000)</button>
+        </div>
+
+        <div class="activity">
+            <h3>🎓 மாணவர்களுக்கான நல்லொழுக்க பயிற்சி வகுப்பு (Rs. 2000/event)</h3>
+            <button class="btn" onclick="addDonation('நல்லொழுக்க பயிற்சி', 2000)">Per Event</button>
+            <button class="btn" onclick="addDonation('நல்லொழுக்க பயிற்சி மாதம்', 8000)">Monthly (4 Events)</button>
+            <button class="btn" onclick="addDonation('நல்லொழுக்க பயிற்சி ஆண்டு', 96000)">Yearly</button>
+        </div>
+
+        <div class="activity">
+            <h3>📖 குர்ஆன் தஃப்சீர் வகுப்பு (Rs. 1000/event)</h3>
+            <button class="btn" onclick="addDonation('குர்ஆன் தஃப்சீர்', 1000)">Per Event</button>
+            <button class="btn" onclick="addDonation('குர்ஆன் தஃப்சீர் மாதம்', 4000)">Monthly</button>
+            <button class="btn" onclick="addDonation('குர்ஆன் தஃப்சீர் ஆண்டு', 48000)">Yearly</button>
+        </div>
+
+        <div class="activity">
+            <h3>🕌 உள்அரங்கு மார்க்க பயான் (Rs. 2000/event)</h3>
+            <button class="btn" onclick="addDonation('மார்க்க பயான்', 2000)">Per Event</button>
+            <button class="btn" onclick="addDonation('மார்க்க பயான் மாதம்', 8000)">Monthly</button>
+            <button class="btn" onclick="addDonation('மார்க்க பயான் ஆண்டு', 96000)">Yearly</button>
+        </div>
+
+        <div class="activity">
+            <h3>🏠 விதவைகள் மற்றும் தேவையுள்ளோருக்கு உதவி (Rs. 1000/family)</h3>
+            <input type="number" id="familyCount" value="1" min="1" style="width: 50px;">
+            <button class="btn" onclick="addFamilyDonation()">Sponsor</button>
+        </div>
+
+        <div class="donate-section">
+            <h2>தொகையான நன்கொடை: Rs. <span id="totalAmount">0</span></h2>
+            <button class="btn" style="background:#25D366;" onclick="sendWhatsApp()">WhatsApp வழியாக அனுப்புக</button>
+        </div>
+    </div>
+
+    <script>
+        let total = 0;
+        let donationDetails = {};
+
+        function addDonation(name, amount) {
+            total += amount;
+            document.getElementById('totalAmount').innerText = total;
+
+            if (donationDetails[name]) {
+                donationDetails[name] += amount;
+            } else {
+                donationDetails[name] = amount;
+            }
+        }
+
+        function addFamilyDonation() {
+            let count = document.getElementById('familyCount').value;
+            let amount = count * 1000;
+            total += amount;
+            document.getElementById('totalAmount').innerText = total;
+
+            donationDetails['விதவைகள் உதவி'] = amount;
+        }
+
+        function sendWhatsApp() {
+            let phoneNumber = "+919952202244"; // Replace with actual WhatsApp number
+            let message = "📢 *நன்கொடை விவரங்கள்:* \n\n";
+
+            for (let [key, value] of Object.entries(donationDetails)) {
+                message += `✅ ${key}: Rs. ${value}\n`;
+            }
+
+            message += `\n💰 *மொத்த தொகை:* Rs. ${total}`;
+            let url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+    </script>
+
+</body>
+</html>
